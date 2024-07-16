@@ -1,3 +1,8 @@
+// para compilar este programa manualmente em linux:
+// gcc -o tic-tac-toe tic-tac-toe.c tela.c tecla.c
+// para executar:
+// ./tic-tac-toe
+
 #include "tela.h"
 #include "tecla.h"
 
@@ -10,22 +15,13 @@
 char verifica_ganhador(char w[3][3])
 {
 
-  // vitoria vertical
+  // vitoria vertical e horizontal
   for (int i = 0; i < 3; i++)
   {
     if (w[0][i] == w[1][i] && w[1][i] == w[2][i] && w[0][i] != '\0')
-    {
       return w[0][i];
-    }
-  }
-
-  // vitoria horizontal
-  for (int i = 0; i < 3; i++)
-  {
     if (w[i][0] == w[i][1] && w[i][1] == w[i][2] && w[i][0] != '\0')
-    {
       return w[i][0];
-    }
   }
 
   // vitoria diagonal
@@ -140,61 +136,57 @@ void contorno() {
   tela_cor_normal();
 }
 
+void exibe_mensagem(char* msg[])
+{
+  for (int i = 0; msg[i] != NULL; i++) {
+    tela_lincol(LIN_MAX / 3 + i, 7);
+    printf("%s", msg[i]);
+  }
+}
+
 void exibe_ganhador(char ganhador, bool empate)
 {
+  char* msg_x[] = {
+    "╔═╗╔═╗          ╔╗        ╔╗",
+    "╚╗╚╝╔╝          ║║        ║║",
+    " ╚╗╔╝  ╔══╦══╦═╗║╚═╦══╦╗╔╗║║",
+    " ╔╝╚╗  ║╔╗║╔╗║╔╗╣╔╗║╔╗║║║║╚╝",
+    "╔╝╔╗╚╗ ║╚╝║╔╗║║║║║║║╚╝║╚╝║╔╗",
+    "╚═╝╚═╝ ╚═╗╠╝╚╩╝╚╩╝╚╩══╩══╝╚╝",
+    "       ╔═╝║",
+    "       ╚══╝", NULL
+  };
+
+  char* msg_o[] = {
+    "╔═══╗          ╔╗        ╔╗",
+    "║╔═╗║          ║║        ║║",
+    "║║ ║║ ╔══╦══╦═╗║╚═╦══╦╗╔╗║║",
+    "║║ ║║ ║╔╗║╔╗║╔╗╣╔╗║╔╗║║║║╚╝",
+    "║╚═╝║ ║╚╝║╔╗║║║║║║║╚╝║╚╝║╔╗",
+    "╚═══╝ ╚═╗╠╝╚╩╝╚╩╝╚╩══╩══╝╚╝",
+    "      ╔═╝║",
+    "      ╚══╝", NULL
+  };
+
+  char* msg_empate[] = {
+    "╔═══╗        ╔╗    ╔╗",
+    "║╔══╝       ╔╝╚╗   ║║",
+    "║╚══╦╗╔╦══╦═╩╗╔╬══╗║║",
+    "║╔══╣╚╝║╔╗║╔╗║║║║═╣╚╝",
+    "║╚══╣║║║╚╝║╔╗║╚╣║═╣╔╗",
+    "╚═══╩╩╩╣╔═╩╝╚╩═╩══╝╚╝",
+    "       ║║",
+    "       ╚╝", NULL
+  };
+
   for (int i = 1; i <= LIN_MAX; i++) {
     contorno();
     if (ganhador == 'X') {
-      tela_lincol(LIN_MAX / 3, 7);
-      printf("╔═╗╔═╗          ╔╗        ╔╗\n");
-      tela_lincol(LIN_MAX / 3 + 1, 7);
-      printf("╚╗╚╝╔╝          ║║        ║║\n");
-      tela_lincol(LIN_MAX / 3 + 2, 7);
-      printf(" ╚╗╔╝  ╔══╦══╦═╗║╚═╦══╦╗╔╗║║\n");
-      tela_lincol(LIN_MAX / 3 + 3, 7);
-      printf(" ╔╝╚╗  ║╔╗║╔╗║╔╗╣╔╗║╔╗║║║║╚╝\n");
-      tela_lincol(LIN_MAX / 3 + 4, 7);
-      printf("╔╝╔╗╚╗ ║╚╝║╔╗║║║║║║║╚╝║╚╝║╔╗\n");
-      tela_lincol(LIN_MAX / 3 + 5, 7);
-      printf("╚═╝╚═╝ ╚═╗╠╝╚╩╝╚╩╝╚╩══╩══╝╚╝\n");
-      tela_lincol(LIN_MAX / 3 + 6, 7);
-      printf("       ╔═╝║\n");
-      tela_lincol(LIN_MAX / 3 + 7, 7);
-      printf("       ╚══╝");
+      exibe_mensagem(msg_x);
     } else if (ganhador == 'O') {
-      tela_lincol(LIN_MAX / 3, 7);
-      printf("╔═══╗          ╔╗        ╔╗\n");
-      tela_lincol(LIN_MAX / 3 + 1, 7);
-      printf("║╔═╗║          ║║        ║║\n");
-      tela_lincol(LIN_MAX / 3 + 2, 7);
-      printf("║║ ║║ ╔══╦══╦═╗║╚═╦══╦╗╔╗║║\n");
-      tela_lincol(LIN_MAX / 3 + 3, 7);
-      printf("║║ ║║ ║╔╗║╔╗║╔╗╣╔╗║╔╗║║║║╚╝\n");
-      tela_lincol(LIN_MAX / 3 + 4, 7);
-      printf("║╚═╝║ ║╚╝║╔╗║║║║║║║╚╝║╚╝║╔╗\n");
-      tela_lincol(LIN_MAX / 3 + 5, 7);
-      printf("╚═══╝ ╚═╗╠╝╚╩╝╚╩╝╚╩══╩══╝╚╝\n");
-      tela_lincol(LIN_MAX / 3 + 6, 7);
-      printf("      ╔═╝║\n");
-      tela_lincol(LIN_MAX / 3 + 7, 7);
-      printf("      ╚══╝");
+      exibe_mensagem(msg_o);
     } else if (empate) {
-      tela_lincol(LIN_MAX / 3, 11);
-      printf("╔═══╗        ╔╗    ╔╗\n");
-      tela_lincol(LIN_MAX / 3 + 1, 11);
-      printf("║╔══╝       ╔╝╚╗   ║║\n");
-      tela_lincol(LIN_MAX / 3 + 2, 11);
-      printf("║╚══╦╗╔╦══╦═╩╗╔╬══╗║║\n");
-      tela_lincol(LIN_MAX / 3 + 3, 11);
-      printf("║╔══╣╚╝║╔╗║╔╗║║║║═╣╚╝\n");
-      tela_lincol(LIN_MAX / 3 + 4, 11);
-      printf("║╚══╣║║║╚╝║╔╗║╚╣║═╣╔╗\n");
-      tela_lincol(LIN_MAX / 3 + 5, 11);
-      printf("╚═══╩╩╩╣╔═╩╝╚╩═╩══╝╚╝\n");
-      tela_lincol(LIN_MAX / 3 + 6, 11);
-      printf("       ║║\n");
-      tela_lincol(LIN_MAX / 3 + 7, 11);
-      printf("       ╚╝");
+      exibe_mensagem(msg_empate);
     }
     for (int j = i; j <= LIN_MAX; j++) {
       tela_cor_fundo(255 - (i * LIN_MAX / 2), 50, 204);
@@ -228,7 +220,7 @@ int main()
 
   // laço principal, onde uma partida é jogada
   while (!fim)
-  { // o laço principal pode ser apenas 3 chamadas de funções (implementar no final)
+  {
     // alterações do estado à partir de entradas
     char c = tecla_le_char();
     if (c == 's' && lin_jogador < 2) lin_jogador++;
